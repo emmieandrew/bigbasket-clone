@@ -40,6 +40,10 @@ export const cartSlice = createSlice({
       }
       setLocalStorage("cart_products", state.cart_products);
     },
+    sync_cart_products: (state, { payload }) => {   
+        state.cart_products=payload;      
+      setLocalStorage("cart_products", state.cart_products);
+    },
     increment: (state, { payload }) => {
       state.orderQuantity = state.orderQuantity + 1;
     },
@@ -104,5 +108,6 @@ export const {
   clearCart,
   closeCartMini,
   openCartMini,
+  sync_cart_products
 } = cartSlice.actions;
 export default cartSlice.reducer;
