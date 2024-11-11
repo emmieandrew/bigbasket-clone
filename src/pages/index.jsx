@@ -52,7 +52,7 @@ export default function Home() {
       <HeaderThree />
       <BeautyBanner />
       <BeautyCategory />
-      <BeautyFeatured />
+      {/* <BeautyFeatured /> */}
       {products.products.map((category, _id) => {
         return (
           <ProductArea
@@ -64,12 +64,12 @@ export default function Home() {
       })}
       {/* <ProductArea title={"New arrivals"} />
       <ProductArea title={"Featured products"} /> */}
-      <BeautyOfferBanner />
-      <ProductAreaTwo />
-      <TrendingSpecialPrd />
+      {/* <BeautyOfferBanner /> */}
+      {/* <ProductAreaTwo /> */}
+      {/* <TrendingSpecialPrd /> */}
       <BeautyTestimonial />
       <FeatureAreaTwo />
-      <InstagramAreaThree />
+      {/* <InstagramAreaThree /> */}
       <Footer style_3={true} />
     </Wrapper>
   );
