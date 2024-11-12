@@ -34,7 +34,7 @@
                     font-weight: 400;
                     font-size: 16px;
                     color: var(--tp-common-white);
-                    padding: 5px 30px;
+                    padding: 7px 30px;
                     &:hover{
                         background-color: var(--tp-theme-brown);
                     }
@@ -393,7 +393,6 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     background-color: #fff;
     padding: 5px;
-    border-radius: 5px;
     & select  { 
         width: 100%;
         border-color: #E6E7E8;
@@ -414,7 +413,6 @@
             justify-content: center;
             display: flex;
             padding: 6px;
-            border-radius: 5px;
             margin-top: 10px;
         }
     }
@@ -429,4 +427,36 @@
             }
         }
     }
+}
+
+
+.ReviewsAndRatings {
+    padding: 10px 10px;
+    width: 50px;
+    border-radius: 6.25rem;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    font-weight: 400;
+    font-size: 0.75rem;
+    height: 1rem;
+    --bg-opacity: 1;
+    background-color: rgba(228, 241, 204, var(--bg-opacity));
+    --text-opacity: 1;
+    color: rgba(71, 111, 0, var(--text-opacity));
+}
+.qKzFq {
+    fill: currentcolor;
+    stroke: currentcolor;
+    margin-left: 0.125rem;
+    margin-top: -1px;
+    --text-opacity: 1;
+    color: rgba(71, 111, 0, var(--text-opacity));
+}
+
+.ReviewsAndRatingsMain {
+    display: flex;
+    align-items: center;
 }

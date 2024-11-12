@@ -25,7 +25,7 @@ const HeaderThree = () => {
     <>
       <header>
         <div id="header-sticky" className={`tp-header-area tp-header-style-transparent-white tp-header-transparent tp-header-sticky has-dark-logo tp-header-height ${sticky ? 'header-sticky' : ''}`}>
-          <div className="tp-header-bottom-3 pl-35 pr-35">
+          <div className="tp-header-bottom-3 pl-35 pr-35 py-2">
             <div className="container-fluid">
               <div className="row align-items-center">
                 <div className="col-xl-2 col-lg-2 col-6">
