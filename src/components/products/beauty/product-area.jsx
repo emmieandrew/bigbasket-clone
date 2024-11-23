@@ -113,12 +113,12 @@ const ProductArea = ({ title, products }) => {
                 <div className="col-4 col-md-4">
                    <div className="viweSlideIcons d-flex justify-content-end">
                        <div className="viweLeftIcon me-2">
-                        <button className="btn shadow-sm bg-white" type="button">
+                        <button className="btn shadow-sm bg-white mt-0 px-3" type="button">
                           <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.829 19a.998.998 0 0 1-.78-.373l-4.828-6a1 1 0 0 1 .01-1.267l5-6a1 1 0 1 1 1.536 1.28l-4.474 5.371 4.315 5.362a1 1 0 0 1-.78 1.627Z" fill="#231F20"></path><mask id="arrow-ios-left_svg__a" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="5" width="7" height="14"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.829 19a.998.998 0 0 1-.78-.373l-4.828-6a1 1 0 0 1 .01-1.267l5-6a1 1 0 1 1 1.536 1.28l-4.474 5.371 4.315 5.362a1 1 0 0 1-.78 1.627Z" fill="#fff"></path></mask><g mask="url(#arrow-ios-left_svg__a)"><path fill="#606060" d="M0 0h24v24H0z"></path></g></svg>
                        </button>
                         </div>
                         <div className="viweRightIcon">
-                        <button className="btn shadow-sm bg-white" type="button">
+                        <button className="btn shadow-sm bg-white mt-0 px-3" type="button">
                         <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 19a1 1 0 0 1-.768-1.64l4.476-5.371-4.316-5.362a1 1 0 0 1 1.56-1.254l4.828 6a1 1 0 0 1-.011 1.267l-5 6a1 1 0 0 1-.77.36Z" fill="#231F20"></path><mask id="arrow-ios-right_svg__a" mask-type="alpha" maskUnits="userSpaceOnUse" x="9" y="5" width="8" height="14"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 19a1 1 0 0 1-.768-1.64l4.476-5.371-4.316-5.362a1 1 0 0 1 1.56-1.254l4.828 6a1 1 0 0 1-.011 1.267l-5 6a1 1 0 0 1-.77.36Z" fill="#fff"></path></mask><g mask="url(#arrow-ios-right_svg__a)"><path fill="#606060" d="M0 0h24v24H0z"></path></g></svg>
                         </button>
                        </div>
