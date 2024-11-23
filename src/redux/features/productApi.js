@@ -10,7 +10,7 @@ export const productApi = apiSlice.injectEndpoints({
       providesTags:['Products']
     }),
     getAllProductsByZipCode: builder.query({
-      query: (zipcode) => `${BASE_URL}/api/home?zipcode=${75287||zipcode}`,
+      query: (zipcode) => `${BASE_URL}/api/home?zipcode=${zipcode}`,
       providesTags: ['ProductsByZipcode'],
     }),
     getProductType: builder.query({

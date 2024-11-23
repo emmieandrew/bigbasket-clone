@@ -15,7 +15,8 @@ const imageUrl =
   "https://cdn.zeptonow.com/production///tr:w-1000,ar-1000-1000,pr-true,f-auto,q-80/cms/product_variant/b92ec79e-ca1f-4336-b283-e5311db13538.jpg";
 const ProductItem = ({ product, prdCenter = false, primary_style = false }) => {
   const { id, name, variants } = product || {};
-
+  console.log("product------",product?.variants[0]?.images
+  )
   const { cart_products } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
   const isAddedToCart = cart_products?.some((prd) => prd.id === id);
@@ -52,7 +53,7 @@ const ProductItem = ({ product, prdCenter = false, primary_style = false }) => {
       <div className="tp-product-thumb-3 tp-product-thumb-top-3  mb-15 fix p-relative z-index-1">
         <Link href={`/product-details/${id}`}>
           <Image
-            src={imageUrl || variants.images[0]?.original_image}
+            src={variants[0]?.images[0]?.thumb_image}
             alt="product image"
             width={282}
             height={320}

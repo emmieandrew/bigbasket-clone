@@ -93,9 +93,9 @@ const ProductArea = ({ title, products }) => {
             <div className="col-lg-6 col-md-12">
               <div className="tp-section-title-wrapper-3 mb-30">
                 <span className="tp-section-title-pre-3">
-                  Product Collection
+                {title}
                 </span>
-                <h3 className="tp-section-title-3">Discover our products ss</h3>
+                {/* <h3 className="tp-section-title-3">{title}</h3> */}
               </div>
             </div>
             <div className="col-lg-6 col-md-12">
