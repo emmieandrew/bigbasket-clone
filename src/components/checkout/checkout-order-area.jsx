@@ -4,6 +4,9 @@ import { useSelector } from "react-redux";
 // internal
 import useCartInfo from "@/hooks/use-cart-info";
 import ErrorMsg from "../common/error-msg";
+import { apiSlice } from "@/redux/api/apiSlice";
+import AddCard from "./add-card";
+import AddOrChooseCard from "./add-or-choose-card";
 
 const CheckoutOrderArea = ({ checkoutData }) => {
   const {
@@ -21,6 +24,12 @@ const CheckoutOrderArea = ({ checkoutData }) => {
   } = checkoutData;
   const { cart_products } = useSelector((state) => state.cart);
   const { total } = useCartInfo();
+
+
+  const handlePlaceOrder= ()=>{
+    // apiSlice.post
+  }
+  
   return (
     <div className="tp-checkout-place white-bg">
       <h3 className="tp-checkout-place-title">Your Order</h3>
@@ -44,7 +53,7 @@ const CheckoutOrderArea = ({ checkoutData }) => {
           ))}
 
           {/*  shipping */}
-          <li className="tp-order-info-list-shipping">
+          {/* <li className="tp-order-info-list-shipping">
             <span>Shipping</span>
             <div className="tp-order-info-list-shipping-item d-flex flex-column align-items-end">
               <span>
@@ -82,7 +91,7 @@ const CheckoutOrderArea = ({ checkoutData }) => {
                 <ErrorMsg msg={errors?.shippingOption?.message} />
               </span>
             </div>
-          </li>
+          </li> */}
 
            {/*  subtotal */}
            <li className="tp-order-info-list-subtotal">
@@ -162,12 +171,14 @@ const CheckoutOrderArea = ({ checkoutData }) => {
           <ErrorMsg msg={errors?.payment?.message} />
         </div>
       </div>
+      <AddOrChooseCard/>
 
       <div className="tp-checkout-btn-wrapper">
         <button
           type="submit"
-          disabled={!stripe || isCheckoutSubmit}
+          // disabled={!stripe || isCheckoutSubmit}
           className="tp-checkout-btn w-100"
+          onClick={handlePlaceOrder}
         >
           Place Order
         </button>

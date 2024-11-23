@@ -1,153 +1,199 @@
-import React from "react";
-import ErrorMsg from "../common/error-msg";
-import { useSelector } from "react-redux";
+import apiInstance from "@/utils/api";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 
-const CheckoutBillingArea = ({ register, errors }) => {
-  const { user } = useSelector((state) => state.auth);
+const CheckoutBillingArea = () => {
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [showAddAddressForm, setShowAddAddressForm] = useState(true);
+  const [loading, setLoading] = useState(false); // Loading state
+  const [error, setError] = useState(null); // Error state
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  // Fetch addresses from the API
+  const fetchAddresses = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await apiInstance.get("/address");
+      setAddresses(response.data);
+    } catch (err) {
+      setError("Failed to fetch addresses. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAddresses();
+  }, []);
+
+  const handleAddAddress = async (data) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await apiInstance.post("/address", data);
+      const newAddress = response.data;
+
+      // Update the address list
+      fetchAddresses();
+
+      // Hide the form and reset fields
+      setShowAddAddressForm(false);
+      reset();
+    } catch (err) {
+      setError("Failed to add address. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="tp-checkout-bill-area">
       <h3 className="tp-checkout-bill-title">Billing Details</h3>
 
-      <div className="tp-checkout-bill-form">
-        <div className="tp-checkout-bill-inner">
-          <div className="row">
-            <div className="col-md-6">
-              <div className="tp-checkout-input">
-                <label>
-                  First Name <span>*</span>
-                </label>
+      {/* Address List */}
+      <div className="tp-checkout-bill-inner">
+        {loading && <p>Loading...</p>}
+        {error && <p className="error">{error}</p>}
+        {!loading && addresses.length > 0
+          ? addresses.map((address) => (
+              <div
+                key={address.id}
+                className={`address-card ${selectedAddressId === address.id ? "selected" : ""}`}
+                onClick={() => setSelectedAddressId(address.id)}
+              >
                 <input
-                  {...register("firstName", {
-                    required: `firstName is required!`,
-                  })}
-                  name="firstName"
-                  id="firstName"
-                  type="text"
-                  placeholder="First Name"
-                  defaultValue={user?.firstName}
+                  type="radio"
+                  name="selected_address"
+                  checked={selectedAddressId === address.id}
+                  onChange={() => setSelectedAddressId(address.id)}
                 />
-                <ErrorMsg msg={errors?.firstName?.message} />
+                <div>
+                  <strong>{address.address_label}</strong>
+                  <p>{address.address_line1}</p>
+                  {address.address_line2 && <p>{address.address_line2}</p>}
+                  <p>{address.landmark}, {address.zipcode}</p>
+                </div>
               </div>
-            </div>
-            <div className="col-md-6">
-              <div className="tp-checkout-input">
-                <label>
-                  Last Name <span>*</span>
-                </label>
-                <input
-                  {...register("lastName", {
-                    required: `lastName is required!`,
-                  })}
-                  name="lastName"
-                  id="lastName"
-                  type="text"
-                  placeholder="Last Name"
-                />
-                <ErrorMsg msg={errors?.lastName?.message} />
-              </div>
-            </div>
-            <div className="col-md-12">
-              <div className="tp-checkout-input">
-                <label>
-                  Country <span>*</span>
-                </label>
-                <input
-                  {...register("country", { required: `country is required!` })}
-                  name="country"
-                  id="country"
-                  type="text"
-                  placeholder="United States (US)"
-                />
-                <ErrorMsg msg={errors?.lastName?.message} />
-              </div>
-            </div>
-            <div className="col-md-12">
-              <div className="tp-checkout-input">
-                <label>Street address</label>
-                <input
-                  {...register("address", { required: `Address is required!` })}
-                  name="address"
-                  id="address"
-                  type="text"
-                  placeholder="House number and street name"
-                />
-                <ErrorMsg msg={errors?.address?.message} />
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="tp-checkout-input">
-                <label>Town / City</label>
-                <input
-                  {...register("city", { required: `City is required!` })}
-                  name="city"
-                  id="city"
-                  type="text"
-                  placeholder="City"
-                />
-                 <ErrorMsg msg={errors?.city?.message} />
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="tp-checkout-input">
-                <label>Postcode ZIP</label>
-                <input
-                  {...register("zipCode", { required: `zipCode is required!` })}
-                  name="zipCode"
-                  id="zipCode"
-                  type="text"
-                  placeholder="Postcode ZIP"
-                />
-                <ErrorMsg msg={errors?.zipCode?.message} />
-              </div>
-            </div>
-            <div className="col-md-12">
-              <div className="tp-checkout-input">
-                <label>
-                  Phone <span>*</span>
-                </label>
-                <input
-                  {...register("contactNo", {
-                    required: `ContactNumber is required!`,
-                  })}
-                  name="contactNo"
-                  id="contactNo"
-                  type="text"
-                  placeholder="Phone"
-                />
-                <ErrorMsg msg={errors?.contactNo?.message} />
-              </div>
-            </div>
-            <div className="col-md-12">
-              <div className="tp-checkout-input">
-                <label>
-                  Email address <span>*</span>
-                </label>
-                <input
-                  {...register("email", { required: `Email is required!` })}
-                  name="email"
-                  id="email"
-                  type="email"
-                  placeholder="Email"
-                  defaultValue={user?.email}
-                />
-                <ErrorMsg msg={errors?.email?.message} />
-              </div>
-            </div>
-            <div className="col-md-12">
-              <div className="tp-checkout-input">
-                <label>Order notes (optional)</label>
-                <textarea
-                  {...register("orderNote", { required: false })}
-                  name="orderNote"
-                  id="orderNote"
-                  placeholder="Notes about your order, e.g. special notes for delivery."
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+            ))
+          : !loading && (
+              <p>No addresses available. Please add a new one below.</p>
+            )}
       </div>
+
+      {/* Add New Address Button */}
+      {!showAddAddressForm && !loading && (
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => setShowAddAddressForm(true)}
+        >
+          Add New Address
+        </button>
+      )}
+
+      {/* Add New Address Form */}
+      {showAddAddressForm && (
+        <div className="tp-checkout-add-address-form">
+          <h4>Add New Address</h4>
+          <div className="tp-checkout-input">
+            <label>
+              Address Label <span>*</span>
+            </label>
+            <input
+              type="text"
+              {...register("address_label", {
+                required: "Address label is required",
+              })}
+              placeholder="e.g., Home, Office"
+            />
+            {errors.address_label && (
+              <p className="error">{errors.address_label.message}</p>
+            )}
+          </div>
+          <div className="tp-checkout-input">
+            <label>
+              Address Line 1 <span>*</span>
+            </label>
+            <input
+              type="text"
+              {...register("address_line1", {
+                required: "Address Line 1 is required",
+              })}
+              placeholder="House number, Street"
+            />
+            {errors.address_line1 && (
+              <p className="error">{errors.address_line1.message}</p>
+            )}
+          </div>
+          <div className="tp-checkout-input">
+            <label>Address Line 2</label>
+            <input
+              type="text"
+              {...register("address_line2")}
+              placeholder="Apartment, Suite"
+            />
+          </div>
+          <div className="tp-checkout-input">
+            <label>
+              Landmark <span>*</span>
+            </label>
+            <input
+              type="text"
+              {...register("landmark", {
+                required: "Landmark is required",
+              })}
+              placeholder="Near Park, Mall, etc."
+            />
+            {errors.landmark && (
+              <p className="error">{errors.landmark.message}</p>
+            )}
+          </div>
+          <div className="tp-checkout-input">
+            <label>
+              ZIP Code <span>*</span>
+            </label>
+            <input
+              type="text"
+              {...register("zipcode", {
+                required: "ZIP Code is required",
+                pattern: {
+                  value: /^[0-9]{5,6}$/,
+                  message: "Enter a valid ZIP code",
+                },
+              })}
+              placeholder="123456"
+            />
+            {errors.zipcode && (
+              <p className="error">{errors.zipcode.message}</p>
+            )}
+          </div>
+          <button
+            onClick={handleSubmit(handleAddAddress)}
+            className="btn btn-primary"
+            disabled={loading}
+          >
+            {loading ? "Saving..." : "Save Address"}
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={() => {
+              setShowAddAddressForm(false);
+              reset(); // Reset form on cancel
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      )}
     </div>
   );
 };
