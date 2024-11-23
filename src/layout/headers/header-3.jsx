@@ -13,7 +13,7 @@ import OffCanvas from '@/components/common/off-canvas';
 import CartMiniSidebar from '@/components/common/cart-mini-sidebar';
 import useCartInfo from '@/hooks/use-cart-info';
 import { openCartMini } from '@/redux/features/cartSlice';
-
+import Location from '@/components/Location'
 const HeaderThree = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isOffCanvasOpen, setIsCanvasOpen] = useState(false);
@@ -21,6 +21,11 @@ const HeaderThree = () => {
   const { quantity } = useCartInfo();
   const { sticky } = useSticky();
   const dispatch = useDispatch();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   return (
     <>
       <header>
@@ -45,6 +50,17 @@ const HeaderThree = () => {
                 </div>
                 <div className="col-xl-2 col-lg-2 col-6">
                   <div className="tp-header-action d-flex align-items-center justify-content-end ml-50">
+                  <span
+        onClick={openModal}
+        style={{
+          cursor: "pointer",
+          color: "blue",
+          textDecoration: "underline",
+        }}
+      >
+        Click
+      </span>
+      <Location isModalOpen={isModalOpen} closeModal={closeModal}></Location>
                     <div className="tp-header-action-item d-none d-sm-block">
                       <button onClick={() => setIsSearchOpen(true)} type="button" className="tp-header-action-btn tp-search-open-btn">
                         <Search />
