@@ -76,21 +76,15 @@ const BeautyCategory = () => {
       <section className="tp-category-area pt-95">
         <div className="container">
           <div className="row align-items-end">
-            <div className="col-lg-6 col-md-8">
-              <div className="tp-section-title-wrapper-3 mb-45">
+            <div className="col-lg-12 col-md-12">
+              <div className="tp-section-title-wrapper-3 mb-30">
                 <span className="tp-section-title-pre-3">
                   Product Collection
                 </span>
-                <h3 className="tp-section-title-3">Discover our products</h3>
+                <h3 className="tp-section-title-3">Discover our products ss</h3>
               </div>
             </div>
-            <div className="col-lg-6 col-md-4">
-              <div className="tp-category-more-3 text-md-end mb-55">
-                <Link href="/shop" className="tp-btn">
-                  Shop All Products <ArrowRightSmTwo />
-                </Link>
-              </div>
-            </div>
+            
           </div>
           <div className="row">{content}</div>
         </div>

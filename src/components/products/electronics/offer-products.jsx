@@ -77,7 +77,7 @@ const OfferProducts = () => {
             <div className="col-xl-4 col-md-5 col-sm-6">
               <div className="tp-section-title-wrapper mb-40">
                 <h3 className="tp-section-title">
-                  Deal of The Day
+                  Deal of The Day 
                   <ShapeLine />
                 </h3>
               </div>

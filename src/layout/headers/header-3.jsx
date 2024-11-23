@@ -33,32 +33,42 @@ const HeaderThree = () => {
           <div className="tp-header-bottom-3 pl-35 pr-35 py-2">
             <div className="container-fluid">
               <div className="row align-items-center">
-                <div className="col-xl-2 col-lg-2 col-6">
+                <div className="col-xl-2 col-lg-2 col-4">
                   <div className="logo">
                     <Link href="/">
-                      <Image className="logo-light" src={logo_white} alt="logo" />
+                      {/* <Image className="logo-light" src={logo_white} alt="logo" />s */}
                       <Image className="logo-dark" src={logo_dark} alt="logo" />
                     </Link>
                   </div>
                 </div>
-                <div className="col-xl-8 col-lg-8 d-none d-lg-block">
+                <div className="col-xl-4 col-lg-4 d-none d-lg-block">
                   <div className="main-menu menu-style-3 p-relative d-flex align-items-center justify-content-center">
                     <nav className="tp-main-menu-content">
                       <Menus />
                     </nav>
                   </div>
                 </div>
-                <div className="col-xl-2 col-lg-2 col-6">
-                  <div className="tp-header-action d-flex align-items-center justify-content-end ml-50">
+                <div className="col-xl-6 col-lg-6 col-8">
+                  <div className="tp-header-action d-flex align-items-center justify-content-end ml-30">
                   <span
         onClick={openModal}
         style={{
           cursor: "pointer",
           color: "blue",
-          textDecoration: "underline",
+          textDecoration: "none",
+          border: "1px solid #000",
+          color: "#000",
+          padding: "2px 5px",
+          display: "flex",
+          alignItems: "center"
         }}
       >
-        Click
+      <svg width={14} height={14} viewBox="-83.5 0 500 500" style={{ marginRight:"2px", }}>
+        <g fill-rule="evenodd">
+          <path d="M166.5,482 C 245,396 328,273 333,181 A166.5,166.5 0 0 0 0,181 C 5,273 88,396 166.5,482 Z M 226,178 A59.5,59.5 0 0 1 107,178 A59.5,59.5 0 0 1 226,178 Z"></path>
+        </g>
+      </svg>
+       <span> Select Location</span>
       </span>
       <Location isModalOpen={isModalOpen} closeModal={closeModal}></Location>
                     <div className="tp-header-action-item d-none d-sm-block">

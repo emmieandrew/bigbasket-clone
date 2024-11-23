@@ -53,7 +53,7 @@ const PinCodeModal = () => {
       contentLabel="Enter Pin Code"
     >
      
-      <p className="modal-title">Enter Your Pin Code</p>
+      <h5 className="modal-title mb-4">Enter Your Pin Code</h5>
       <form onSubmit={handleSubmit(onSubmit)} className="modal-form">
         <input
           type="text"
@@ -61,9 +61,11 @@ const PinCodeModal = () => {
           {...register("pinCode", { required: true })}
           className="modal-input"
         />
-        <button type="submit" className="modal-submit-button">
+        <div className="text-center mt-4">
+        <button type="submit" className="tp-btn modal-submit-button">
           Submit
         </button>
+        </div>
       </form>
     </Modal>
   );
