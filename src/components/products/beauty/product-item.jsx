@@ -18,9 +18,9 @@ const ProductItem = ({ product, prdCenter = false, primary_style = false }) => {
 
   const { cart_products } = useSelector((state) => state.cart);
   const { wishlist } = useSelector((state) => state.wishlist);
-  const isAddedToCart = cart_products.some((prd) => prd.id === id);
-  const addedProduct = cart_products.find((prd) => prd.id === id);
-  const isAddedToWishlist = wishlist.some((prd) => prd.id === id);
+  const isAddedToCart = cart_products?.some((prd) => prd.id === id);
+  const addedProduct = cart_products?.find((prd) => prd.id === id);
+  const isAddedToWishlist = wishlist?.some((prd) => prd.id === id);
   const dispatch = useDispatch();
 
   // State for selected variant

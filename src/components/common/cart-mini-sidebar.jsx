@@ -50,7 +50,7 @@ const CartMiniSidebar = () => {
             <div className="cartmini__shipping">
               <RenderCartProgress />
             </div>
-            {cart_products.length > 0 && (
+            {cart_products?.length > 0 && (
               <div className="cartmini__widget">
                 {cart_products.map((item) => (
                   <div key={item.id} className="cartmini__widget-item">
@@ -89,7 +89,7 @@ const CartMiniSidebar = () => {
               </div>
             )}
             {/* if no item in cart */}
-            {cart_products.length === 0 && (
+            {cart_products?.length === 0 && (
               <div className="cartmini__empty text-center">
                 <Image src={empty_cart_img} alt="empty-cart-img" />
                 <p>Your Cart is empty</p>
@@ -102,7 +102,7 @@ const CartMiniSidebar = () => {
           <div className="cartmini__checkout">
             <div className="cartmini__checkout-title mb-30">
               <h4>Subtotal:</h4>
-              <span>${total.toFixed(2)}</span>
+              <span>${total?.toFixed(2)}</span>
             </div>
             <div className="cartmini__checkout-btn">
               <Link

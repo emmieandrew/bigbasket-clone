@@ -13,10 +13,10 @@ const useSyncCartData = () => {
 
   const syncCartItemsWithLocalStorage = async () => {
     const response = await syncCarts(cart_products);
-    let carts = response.data.cart;
+    let carts = response?.data?.cart;
   
     // Transforming the cart data to match the expected format
-    let updatedCart = carts.map((item) => {
+    let updatedCart = carts?.map((item) => {
       return {
         ...item.product,
         id: item.product_id,

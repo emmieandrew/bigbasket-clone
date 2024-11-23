@@ -19,7 +19,7 @@ const CheckoutArea = () => {
         style={{ backgroundColor: "#EFF1F5" }}
       >
         <div className="container">
-          {cart_products.length === 0 && (
+          {cart_products?.length === 0 && (
             <div className="text-center pt-50">
               <h3 className="py-2">No items found in cart to checkout</h3>
               <Link href="/shop" className="tp-checkout-btn">
@@ -27,7 +27,7 @@ const CheckoutArea = () => {
               </Link>
             </div>
           )}
-          {cart_products.length > 0 && (
+          {cart_products?.length > 0 && (
             <div className="row">
               <div className="col-xl-7 col-lg-7">
                 <div className="tp-checkout-verify">

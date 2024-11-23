@@ -7,7 +7,7 @@ const useCartInfo = () => {
     const { cart_products } = useSelector((state) => state.cart);
 
     useEffect(() => {
-        const cart = cart_products.reduce((cartTotal, cartItem) => {
+        const cart = cart_products?.reduce((cartTotal, cartItem) => {
             const { price, orderQuantity,selectedVariant } = cartItem;
             const itemTotal = selectedVariant.sell_price * orderQuantity;
             cartTotal.total += itemTotal
@@ -18,8 +18,8 @@ const useCartInfo = () => {
             total: 0,
             quantity: 0,
         })
-        setQuantity(cart.quantity);
-        setTotal(cart.total);
+        setQuantity(cart?.quantity);
+        setTotal(cart?.total);
     }, [cart_products])
     return {
         quantity,
