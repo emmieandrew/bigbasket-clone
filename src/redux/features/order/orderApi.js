@@ -66,7 +66,7 @@ export const authApi = apiSlice.injectEndpoints({
 
     // getUserOrders
     getUserOrders: builder.query({
-      query: () => `https://shofy-backend.vercel.app/api/user-order`,
+      query: () => `${BASE_URL}/api/web/order`,
       providesTags: ["UserOrders"],
       keepUnusedDataFor: 600,
     }),

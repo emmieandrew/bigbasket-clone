@@ -51,7 +51,7 @@ const ProductItem = ({ product, prdCenter = false, primary_style = false }) => {
       } ${prdCenter ? "text-center" : ""}`}
     >
       <div className="tp-product-thumb-3 tp-product-thumb-top-3  mb-15 fix p-relative z-index-1">
-        <Link href={`/product-details/${id}`}>
+        {/* <Link href={`/product-details/${id}`}> */}
           <Image
             src={variants[0]?.images[0]?.thumb_image}
             alt="product image"
@@ -72,7 +72,7 @@ const ProductItem = ({ product, prdCenter = false, primary_style = false }) => {
               <span className="tp-product-tooltip">Add To Wishlist</span>
             </button>
             </div>
-        </Link>
+        {/* </Link> */}
 
         <div className="tp-product-badge">
           {status === "out-of-stock" && (

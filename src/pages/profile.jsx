@@ -12,7 +12,12 @@ import Loader from "@/components/loader/loader";
 
 const ProfilePage = () => {
   const router = useRouter();
-  const {data: orderData, isError, isLoading, } = useGetUserOrdersQuery();
+  const { data: orderData, isError, isLoading } = useGetUserOrdersQuery();
+
+  const sortedOrderData = orderData
+  ? [...orderData].sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+  : [];
+
   useEffect(() => {
     const isAuthenticate = Cookies.get("userInfo");
     if (!isAuthenticate) {
@@ -35,7 +40,7 @@ const ProfilePage = () => {
     <Wrapper>
       <SEO pageTitle="Profile" />
       <HeaderTwo style_2={true} />
-      <ProfileArea orderData={orderData} />
+      <ProfileArea orderData={sortedOrderData} />
       <Footer style_2={true} />
     </Wrapper>
   );
