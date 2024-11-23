@@ -386,6 +386,7 @@
         background-color: #FFFFFF;
         & a{
             display: block;
+            position: relative;
         }
     }
 }
@@ -415,6 +416,7 @@
             padding: 6px;
             margin-top: 10px;
         }
+        
     }
 }
 
@@ -459,4 +461,21 @@
 .ReviewsAndRatingsMain {
     display: flex;
     align-items: center;
+}
+
+.productSaleBag { 
+    background-color: #eae4de;
+    position: absolute;
+    top: 0;
+    padding: 2px 10px;
+    left: 0;
+    color: #010f1c;
+    font-size: 12px;
+    border-radius: 0px 5px 5px 0px;
+}
+
+.cardLikeIocn {
+     position: absolute;
+     top: 0;
+     right: 0;
 }

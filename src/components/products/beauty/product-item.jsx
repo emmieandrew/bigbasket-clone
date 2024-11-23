@@ -57,6 +57,20 @@ const ProductItem = ({ product, prdCenter = false, primary_style = false }) => {
             width={282}
             height={320}
           />
+          <span className="productSaleBag">24% OFF</span>
+          <div className="cardLikeIocn">
+              <button
+              disabled={status === "out-of-stock"}
+              onClick={() => handleWishlistProduct(product)}
+              className={`tp-product-action-btn-3 
+            ${
+              isAddedToWishlist ? "active" : ""
+            } tp-product-add-to-wishlist-btn`}
+            >
+              <Wishlist />
+              <span className="tp-product-tooltip">Add To Wishlist</span>
+            </button>
+            </div>
         </Link>
 
         <div className="tp-product-badge">
@@ -180,7 +194,7 @@ const ProductItem = ({ product, prdCenter = false, primary_style = false }) => {
                 href="/cart"
                 className="tp-product-add-cart-btn-large text-center"
               >
-                View To Cart
+                View To Cart 
               </Link>
             </>
           ) : (
@@ -192,27 +206,15 @@ const ProductItem = ({ product, prdCenter = false, primary_style = false }) => {
                 </div>
               <div className="col-md-12 mx-auto">
               <div className="row align-items-center">
-                <div className="col-md-3">
-              <button
-              disabled={status === "out-of-stock"}
-              onClick={() => handleWishlistProduct(product)}
-              className={`tp-product-action-btn-3 
-            ${
-              isAddedToWishlist ? "active" : ""
-            } tp-product-add-to-wishlist-btn`}
-            >
-              <Wishlist />
-              <span className="tp-product-tooltip">Add To Wishlist</span>
-            </button>
-            </div>
-            <div className="col-md-9 px-0">
+                
+            <div className="col-md-12 px-0">
               <button
                 onClick={() => handleAddProduct(product)}
                 type="button"
                 className="tp-product-add-cart-btn-large"
                 disabled={status === "out-of-stock"}
               >
-                Add To Cart
+                Add To Cart 
               </button>
               </div>
               </div>

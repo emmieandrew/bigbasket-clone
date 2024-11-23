@@ -145,6 +145,11 @@ const Header = () => {
               <div className="col-xl-3 col-lg-3 col-md-3 col-6">
                 <div className="tp-header-action d-flex align-items-center justify-content-end ml-50">
                   <div className="tp-header-action-item d-none d-lg-block">
+                    <Link href="#" className="tp-header-action-btn">
+                      <span>Location</span>
+                    </Link>
+                  </div>
+                  <div className="tp-header-action-item d-none d-lg-block">
                     <Link href="/compare" className="tp-header-action-btn">
                       <Compare />
                     </Link>
