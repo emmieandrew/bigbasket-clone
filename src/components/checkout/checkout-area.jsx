@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 // internal
@@ -10,8 +10,19 @@ import useCheckoutSubmit from "@/hooks/use-checkout-submit";
 
 const CheckoutArea = () => {
   const checkoutData = useCheckoutSubmit();
-  const {handleSubmit,submitHandler,register,errors,handleCouponCode,couponRef,couponApplyMsg} = checkoutData;
+  const {
+    handleSubmit,
+    submitHandler,
+    register,
+    errors,
+    handleCouponCode,
+    couponRef,
+    couponApplyMsg,
+  } = checkoutData;
   const { cart_products } = useSelector((state) => state.cart);
+
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
+
   return (
     <>
       <section
@@ -42,10 +53,18 @@ const CheckoutArea = () => {
               <form onSubmit={handleSubmit(submitHandler)}>
                 <div className="row">
                   <div className="col-lg-7">
-                    <CheckoutBillingArea register={register} errors={errors} />
+                    <CheckoutBillingArea
+                      register={register}
+                      errors={errors}
+                      selectedAddressId={selectedAddressId}
+                      setSelectedAddressId={setSelectedAddressId}
+                    />
                   </div>
                   <div className="col-lg-5">
-                    <CheckoutOrderArea checkoutData={checkoutData} />
+                    <CheckoutOrderArea
+                      checkoutData={checkoutData}
+                      selectedAddressId={selectedAddressId}
+                    />
                   </div>
                 </div>
               </form>

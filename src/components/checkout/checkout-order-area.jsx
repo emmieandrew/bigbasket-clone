@@ -1,48 +1,90 @@
 import { useState } from "react";
-import { CardElement } from "@stripe/react-stripe-js";
-import { useSelector } from "react-redux";
-// internal
+import { useDispatch, useSelector } from "react-redux";
 import useCartInfo from "@/hooks/use-cart-info";
 import ErrorMsg from "../common/error-msg";
-import { apiSlice } from "@/redux/api/apiSlice";
-import AddCard from "./add-card";
 import AddOrChooseCard from "./add-or-choose-card";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import apiInstance from "@/utils/api";
+import { useRouter } from "next/navigation";
+import { sync_cart_products } from "@/redux/features/cartSlice";
 
-const CheckoutOrderArea = ({ checkoutData }) => {
-  const {
-    handleShippingCost,
-    cartTotal = 0,
-    stripe,
-    isCheckoutSubmit,
-    clientSecret,
-    register,
-    errors,
-    showCard,
-    setShowCard,
-    shippingCost,
-    discountAmount
-  } = checkoutData;
+const CheckoutOrderArea = ({ checkoutData, selectedAddressId }) => {
+  const dispatch = useDispatch();
+  const navigation = useRouter();
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Loader state
+
   const { cart_products } = useSelector((state) => state.cart);
   const { total } = useCartInfo();
 
+  const {
+    handleShippingCost,
+    cartTotal = 0,
+    shippingCost,
+    discountAmount,
+    showCard,
+    setShowCard,
+  } = checkoutData;
 
-  const handlePlaceOrder= ()=>{
-    // apiSlice.post
-  }
-  
+  const { register, errors } = useForm();
+
+  const handlePlaceOrder = async () => {
+    if (!selectedAddressId) {
+      toast.error("📍 Please select an address.");
+      return;
+    }
+    if (!selectedPaymentMethod) {
+      toast.error("💳 Please select a payment method.");
+      return;
+    }
+    if (selectedPaymentMethod === "Card" && !selectedCard) {
+      toast.error("💳 Please select a saved card.");
+      return;
+    }
+
+    const orderData = {
+      tip_amount: 0,
+      address_id: selectedAddressId,
+      shipping_cost: shippingCost,
+      discount: discountAmount,
+    };
+
+    if (selectedPaymentMethod === "Card") {
+      orderData.card_id = selectedCard;
+      orderData.payment_mode = "online";
+    } else if (selectedPaymentMethod === "COD") {
+      orderData.payment_mode = "cod";
+    }
+
+    try {
+      setIsSubmitting(true); // Start loader
+      const response = await apiInstance.post("/order", orderData);
+      dispatch(sync_cart_products([]));
+      toast.success("🎉 Order placed successfully!");
+      navigation.push("/");
+    } catch (error) {
+      toast.error(
+        `🚨 Error placing order: ${
+          error.response?.data?.message || "Something went wrong."
+        }`
+      );
+    } finally {
+      setIsSubmitting(false); // Stop loader
+    }
+  };
+
   return (
     <div className="tp-checkout-place white-bg">
       <h3 className="tp-checkout-place-title">Your Order</h3>
 
       <div className="tp-order-info-list">
         <ul>
-          {/*  header */}
           <li className="tp-order-info-list-header">
             <h4>Product</h4>
             <h4>Total</h4>
           </li>
-
-          {/*  item list */}
           {cart_products.map((item) => (
             <li key={item._id} className="tp-order-info-list-desc">
               <p>
@@ -51,136 +93,71 @@ const CheckoutOrderArea = ({ checkoutData }) => {
               <span>${item.selectedVariant.sell_price.toFixed(2)}</span>
             </li>
           ))}
-
-          {/*  shipping */}
-          {/* <li className="tp-order-info-list-shipping">
-            <span>Shipping</span>
-            <div className="tp-order-info-list-shipping-item d-flex flex-column align-items-end">
-              <span>
-                <input
-                  {...register(`shippingOption`, {
-                    required: `Shipping Option is required!`,
-                  })}
-                  id="flat_shipping"
-                  type="radio"
-                  name="shippingOption"
-                />
-                <label
-                  onClick={() => handleShippingCost(60)}
-                  htmlFor="flat_shipping"
-                >
-                  Delivery: Today Cost :<span>$60.00</span>
-                </label>
-                <ErrorMsg msg={errors?.shippingOption?.message} />
-              </span>
-              <span>
-                <input
-                  {...register(`shippingOption`, {
-                    required: `Shipping Option is required!`,
-                  })}
-                  id="flat_rate"
-                  type="radio"
-                  name="shippingOption"
-                />
-                <label
-                  onClick={() => handleShippingCost(20)}
-                  htmlFor="flat_rate"
-                >
-                  Delivery: 7 Days Cost: <span>$20.00</span>
-                </label>
-                <ErrorMsg msg={errors?.shippingOption?.message} />
-              </span>
-            </div>
-          </li> */}
-
-           {/*  subtotal */}
-           <li className="tp-order-info-list-subtotal">
+          <li className="tp-order-info-list-subtotal">
             <span>Subtotal</span>
             <span>${total?.toFixed(2)}</span>
           </li>
-
-           {/*  shipping cost */}
-           <li className="tp-order-info-list-subtotal">
+          <li className="tp-order-info-list-subtotal">
             <span>Shipping Cost</span>
             <span>${shippingCost.toFixed(2)}</span>
           </li>
-
-           {/* discount */}
-           <li className="tp-order-info-list-subtotal">
+          <li className="tp-order-info-list-subtotal">
             <span>Discount</span>
             <span>${discountAmount.toFixed(2)}</span>
           </li>
-
-          {/* total */}
           <li className="tp-order-info-list-total">
             <span>Total</span>
             <span>${parseFloat(cartTotal).toFixed(2)}</span>
           </li>
         </ul>
       </div>
+
       <div className="tp-checkout-payment">
         <div className="tp-checkout-payment-item">
           <input
-            {...register(`payment`, {
-              required: `Payment Option is required!`,
-            })}
             type="radio"
-            id="back_transfer"
+            id="credit_card"
             name="payment"
             value="Card"
+            onChange={(e) => {
+              setSelectedPaymentMethod(e.target.value);
+              setShowCard(true);
+            }}
           />
-          <label onClick={() => setShowCard(true)} htmlFor="back_transfer" data-bs-toggle="direct-bank-transfer">
-            Credit Card
-          </label>
-          {showCard && (
-            <div className="direct-bank-transfer">
-              <div className="payment_card">
-                <CardElement
-                  options={{
-                    style: {
-                      base: {
-                        fontSize: "16px",
-                        color: "#424770",
-                        "::placeholder": {
-                          color: "#aab7c4",
-                        },
-                      },
-                      invalid: {
-                        color: "#9e2146",
-                      },
-                    },
-                  }}
-                />
-              </div>
-            </div>
-          )}
+          <label htmlFor="credit_card">Credit Card</label>
           <ErrorMsg msg={errors?.payment?.message} />
         </div>
         <div className="tp-checkout-payment-item">
           <input
-            {...register(`payment`, {
-              required: `Payment Option is required!`,
-            })}
-            onClick={() => setShowCard(false)}
             type="radio"
             id="cod"
             name="payment"
             value="COD"
+            onChange={(e) => {
+              setSelectedPaymentMethod(e.target.value);
+              setShowCard(false);
+            }}
           />
           <label htmlFor="cod">Cash on Delivery</label>
           <ErrorMsg msg={errors?.payment?.message} />
         </div>
       </div>
-      <AddOrChooseCard/>
+
+      {showCard && (
+        <AddOrChooseCard
+          selectedCard={selectedCard}
+          setSelectedCard={setSelectedCard}
+        />
+      )}
 
       <div className="tp-checkout-btn-wrapper">
         <button
           type="submit"
-          // disabled={!stripe || isCheckoutSubmit}
           className="tp-checkout-btn w-100"
           onClick={handlePlaceOrder}
+          disabled={isSubmitting} // Disable button during submission
         >
-          Place Order
+          {isSubmitting ? "Placing Order..." : "Place Order"}
         </button>
       </div>
     </div>

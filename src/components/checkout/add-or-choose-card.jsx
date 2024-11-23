@@ -8,14 +8,13 @@ import {
 } from "@stripe/react-stripe-js";
 import apiInstance from "@/utils/api";
 
-const AddOrChooseCard = () => {
+const AddOrChooseCard = ({ selectedCard, setSelectedCard }) => {
   const stripe = useStripe();
   const elements = useElements();
 
   const [name, setName] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [cards, setCards] = useState([]);
-  const [selectedCard, setSelectedCard] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -62,7 +61,7 @@ const AddOrChooseCard = () => {
       }
 
       // Send token to backend
-      console.log('token: ', token);
+      console.log("token: ", token);
       const response = await apiInstance.post("/card", {
         token: token.id,
       });

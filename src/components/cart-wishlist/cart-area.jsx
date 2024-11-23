@@ -10,11 +10,11 @@ import { useSyncCartsMutation } from "@/redux/features/order/orderApi";
 import useSyncCartData from "@/hooks/useSyncCartData";
 
 const CartArea = () => {
+  
   const { cart_products } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
 
-  useSyncCartData();
   return (
     <>
       <section className="tp-cart-area pb-120">

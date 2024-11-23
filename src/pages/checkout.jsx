@@ -8,10 +8,13 @@ import HeaderTwo from '@/layout/headers/header-2';
 import Footer from '@/layout/footers/footer';
 import CommonBreadcrumb from '@/components/breadcrumb/common-breadcrumb';
 import CheckoutArea from '@/components/checkout/checkout-area';
+import useSyncCartData from '@/hooks/useSyncCartData';
 
 
 const CheckoutPage = () => {
   const router = useRouter();
+  useSyncCartData();
+
   useEffect(() => {
     const isAuthenticate = Cookies.get("userInfo");
     console.log('isAuthenticate: ', isAuthenticate);

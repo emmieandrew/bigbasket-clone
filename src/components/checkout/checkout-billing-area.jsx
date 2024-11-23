@@ -2,9 +2,9 @@ import apiInstance from "@/utils/api";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-const CheckoutBillingArea = () => {
+const CheckoutBillingArea = ({ selectedAddressId, setSelectedAddressId }) => {
   const [addresses, setAddresses] = useState([]);
-  const [selectedAddressId, setSelectedAddressId] = useState(null);
+  // const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [showAddAddressForm, setShowAddAddressForm] = useState(true);
   const [loading, setLoading] = useState(false); // Loading state
   const [error, setError] = useState(null); // Error state
@@ -66,7 +66,9 @@ const CheckoutBillingArea = () => {
           ? addresses.map((address) => (
               <div
                 key={address.id}
-                className={`address-card ${selectedAddressId === address.id ? "selected" : ""}`}
+                className={`address-card ${
+                  selectedAddressId === address.id ? "selected" : ""
+                }`}
                 onClick={() => setSelectedAddressId(address.id)}
               >
                 <input
@@ -79,7 +81,9 @@ const CheckoutBillingArea = () => {
                   <strong>{address.address_label}</strong>
                   <p>{address.address_line1}</p>
                   {address.address_line2 && <p>{address.address_line2}</p>}
-                  <p>{address.landmark}, {address.zipcode}</p>
+                  <p>
+                    {address.landmark}, {address.zipcode}
+                  </p>
                 </div>
               </div>
             ))
