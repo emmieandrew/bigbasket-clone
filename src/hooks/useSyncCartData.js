@@ -7,6 +7,8 @@ import { sync_cart_products } from "@/redux/features/cartSlice";
 const useSyncCartData = () => {
   const dispatch =useDispatch();
   const { cart_products } = useSelector((state) => state.cart);
+  const auth = useSelector((state) => state.auth);
+
   const [syncCarts] = useSyncCartsMutation();
   const authChecked = useAuthCheck();
   const isFirst = useRef(true);
@@ -34,7 +36,7 @@ const useSyncCartData = () => {
   
 
   useEffect(() => {
-    if (authChecked && cart_products) {
+    if (auth.accessToken && auth.user && cart_products) {
       syncCartItemsWithLocalStorage()
     }
   }, [cart_products,authChecked]); // Runs whenever cart_products change

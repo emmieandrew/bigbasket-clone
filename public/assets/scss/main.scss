@@ -5,3 +5,83 @@
 @forward 'components';
 @forward 'layout';
 
+
+.tp-checkout-bill-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .address-card {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for better visibility */
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .address-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+  }
+  
+  .address-card.selected {
+    border: 2px solid #007bff; /* Highlight selected card */
+    background-color: #f5faff; /* Light blue background for selected card */
+  }
+  
+  .address-card input[type="radio"] {
+    margin-right: 15px;
+  }
+  
+  .address-card div {
+    flex-grow: 1;
+  }
+  
+  .address-card strong {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  
+  .address-card p {
+    margin: 5px 0;
+    color: #555;
+  }
+  
+  /* Error message styling */
+  .error {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 5px;
+  }
+  
+  /* Button Styles */
+  .btn {
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+  }
+  
+  .btn-secondary {
+    background-color: #f8f9fa;
+    color: #007bff;
+    border: 1px solid #007bff;
+  }
+  
+  .btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
